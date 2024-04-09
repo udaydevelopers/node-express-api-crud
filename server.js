@@ -12,10 +12,6 @@ app.use(bodyParser.json());
 
 connectDB();
 
-
-app.use(bodyParser.json());
-
-
 app.use('/user', userRoutes);
 app.use('/category', categoryRoutes);
 app.use('/product', productRoutes);
