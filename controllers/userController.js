@@ -36,6 +36,25 @@ const login = async (req, res) => {
     } catch (error) {
       res.status(500).json({ message: error.message });
     }
-  };
+};
 
-module.exports = { registerUser, login };
+const refreshTokens = async (req, res) => {
+    const refreshToken = req.body.refreshToken;
+    if (!refreshToken) {
+      return res.status(401).json({ message: 'Refresh token is required' });
+    }
+  
+    try {
+      const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
+      const userId = decoded.id;
+  
+      const accessToken = jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: '1h' });
+  
+      res.json({ accessToken });
+    } catch (error) {
+      return res.status(403).json({ message: 'Invalid refresh token' });
+    }
+  };
+  
+
+module.exports = { registerUser, login, refreshTokens };

@@ -13,4 +13,6 @@ router.post('/change-password', verifyToken, async (req, res) => {
   // Implement change password
 });
 
+router.post('/refresh-tokens', refreshTokens);
+
 module.exports = router;
